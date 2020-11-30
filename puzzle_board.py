@@ -1,7 +1,7 @@
 """
 puzzle_board.py 
 
-This module contains all of the functions and methods to generate an 8 - puzzle in the form of a 2d list.
+This module contains all of the functions and methods to generate an 8 - puzzle in the form of a 2d list. 
 """
 
 import random, copy
@@ -9,8 +9,28 @@ import random, copy
 class puzzle_board:
 
     def __init__(self):
-        self.puzzle = self.generate_puzzle()
-        self.solved = [[1, 2, 3], [4, 5, 6], [7, 8, None]]    # represents solved state
+        self._puzzle = self.generate_puzzle()
+        self._solved = [[1, 2, 3], [4, 5, 6], [7, 8, None]]    # represents solved state
+
+    @property
+    def puzzle(self):
+        """puzzle preperty getter"""
+        return self._puzzle
+
+    @puzzle.setter
+    def puzzle(self, value):
+        """puzzle preperty setter"""
+        self._puzzle = value
+
+    @property
+    def solved(self):
+        """solved preperty getter"""
+        return self._solved
+
+    @solved.setter
+    def solved(self, value):
+        """solved preperty setter"""
+        self._solved = value
 
     def get_blank_pos(self):
         """Get Blank Position"""
@@ -128,14 +148,43 @@ class puzzle_board:
             puzzle_board.append(row)  # add row to board
         
         return puzzle_board   
-  
 
+    def is_solvable(self):
+        """
+        Checks if the puzzle is even solvable. Based on number of inversions
+        an 8 puzzle is not solvable if it has an odd number of inversions.
+        This is because horizontal movements result in no change to number of inversions,
+        but each verticle move results in a change of plus or minus 2 to the number of inversions
+        in a puzzle. Therefore if a puzzle is generated with an odd number of inversions, it is 
+        unsolvable.
+        """
+
+        puzzle_1D = []
+        inversions = 0
+
+        # convert puzzle to 1 dimensional grid ignoring the blank space
+        for i in range(0, len(self.puzzle)):
+            for j in range(0, len(self.puzzle[i])):
+                if self.puzzle[i][j] is not None:
+                    puzzle_1D.append(self.puzzle[i][j])
+        
+        # convert puzzle to 1 dimensional grid ignoring the blank space
+        for i in range(0, len(puzzle_1D)):
+            for j in range(i + 1, len(puzzle_1D)):
+                if puzzle_1D[j] < puzzle_1D[i] :
+                    inversions += 1        
+
+        # Check for even number of inversions
+        if inversions % 2 == 0:
+            return True # Solvable
+        else:
+            return False # Unsolvable
 
 if __name__=="__main__":
     """Execute Script"""
-    puzzle = puzzle_board()  
-    print(puzzle.puzzle)
-    print(puzzle.find_valid_moves())
-    puzzle.make_move('up')
-    print(puzzle.puzzle)
+    test = puzzle_board()  
+    print(test.puzzle)
+    
+    test.is_solvable()
+    
    

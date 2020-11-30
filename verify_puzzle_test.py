@@ -31,13 +31,7 @@ class TestBuildTree(unittest.TestCase):
         self._test_6 = pb()
         self._test_6.puzzle = [[2,None,8],[5, 6, 4], [7, 3, 1]]   # assign test puzzle value, solvable in at least 23 moves (takes 15 mins)
 
-        self._test_3 = pb() # creates a new random puzzle each time
-    
-    def test_get_children(self):
-        """Test if getting children works"""
-
-        children = self._test_1.find_valid_moves()
-        self.assertListEqual(children, ['up', 'down', 'left', 'right'])
+        self._test_3 = pb() # creates a new random puzzle each time    
 
     def test_build_tree_fixed(self):
         """tests build tree method with fixed/controlled tests"""

@@ -108,7 +108,6 @@ def get_solving_moves(solution):
 
     return move_list
 
-
 def get_opposite_move(move):
     """
     finds opposite of a given move

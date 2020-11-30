@@ -49,12 +49,6 @@ TITLE = 'WELCOME TO EIGHT PUZZLE!!!\nby: Joe Polaski'
 BOX_SIZE = 100
 EMPTY_BOX = None
 
-# BUTTONS
-BTN_RESET = pygame.Rect(575, 575, 125, 30) # creates a rectangle object
-RESET_TXT = BTN_FONT.render('Reset', True, TEXTCOLOR)
-BTN_NEW = pygame.Rect(575, 575, 125, 30) # creates a rectangle object
-BTN_SOLVABLE = pygame.Rect(575, 575, 125, 30) # creates a rectangle object
-
 # DECLARE MARGIN WIDTH TO CENTER GAME ON BACKGROUND
 MARGIN_AROUND = int((WIN_WIDTH - (BOX_SIZE * COLUMNS + (COLUMNS - 1))) / 2)
 
@@ -111,12 +105,23 @@ def draw_game(window, text):
     including messages to user
     """
 
-    RENDER_WINDOW.fill(BACKGROUNDCOLOR)  # fill window with background color
+    RENDER_WINDOW.fill(BACKGROUNDCOLOR)  # fill window with background color 
+
+    draw_buttons() # draw buttons to GUI   
+
+def draw_buttons():
+    """ Draws All Buttons to GUI"""
+
+    # Define Buttons
+    btn_reset = pygame.Rect(575, 575, 125, 30) # creates a rectangle object
+    reset_txt = BTN_FONT.render('Reset', True, TEXTCOLOR)   # creates font
+
+    #BTN_NEW = pygame.Rect(575, 575, 125, 30) # creates a rectangle object
+    #BTN_SOLVABLE = pygame.Rect(575, 575, 125, 30) # creates a rectangle object
 
     # Draw buttons
-    pygame.draw.rect(RENDER_WINDOW, METALBLUE, BTN_RESET)    
-    RENDER_WINDOW.blit(RESET_TXT, BTN_RESET)
-
+    pygame.draw.rect(RENDER_WINDOW, METALBLUE, btn_reset)  #draw reset button  
+    RENDER_WINDOW.blit(reset_txt, (btn_reset.x + 35, btn_reset.y + 5)) # render text centered on button
 
 
 
