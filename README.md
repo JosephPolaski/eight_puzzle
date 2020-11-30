@@ -8,10 +8,10 @@ Fall 2020
 
 ### **Overview**:
 
-This game uses the python arcade library for the GUI, I highly recommend checking it out!
-- <a href="https://arcade.academy/">The Python Arcade Library</a>
+This 8-puzzle game uses Pygame for the GUI, I highly recommend checking it out!
+- <a href="https://www.pygame.org/">Pygame.org</a>
 
-### **Before getting started:**
+### **Updated installation instructions comming soon:**
 
 ### **To run this game**:
 1. Create and activate new a virtual environment and update pip:
