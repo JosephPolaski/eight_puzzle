@@ -135,7 +135,7 @@ class puzzle_board:
             
             while len(row) < 3:
 
-                rand_num = random.randint(1, 9) # generate random integer between 1 - 8           
+                rand_num = random.randint(1, 9) # generate random integer between 1 - 9           
 
                 if rand_num not in already_used:
                     if rand_num == 9:

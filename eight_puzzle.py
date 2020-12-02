@@ -14,7 +14,7 @@ and verification that I created.
 """
 from puzzle_board import puzzle_board as pb 
 import verify_puzzle as vpuz
-import pygame, sys, copy
+import pygame, sys, copy, random
 from pygame.locals import *
 
 
@@ -46,7 +46,7 @@ BOXBORDER = PAPAYA
 BUTTONCOLOR = SPACE
 
 # DECLARE GUI CONSTRAINT CONSTANTS
-WIN_WIDTH = 1024
+WIN_WIDTH = 730
 WIN_HEIGHT = 768
 TITLE = 'WELCOME TO EIGHT PUZZLE!!!'
 
@@ -61,13 +61,34 @@ def game_main():
     front and back end.
     """
     # global variables that will be used in other functions
-    global GAME_CLOCK, RENDER_WINDOW, GAME_PUZZLE, BOARD, MOVE_COUNT_BOX, MOVE_COUNT, PUZZLE_COPY, RESET_BTN, CHECK_BTN, NEW_BTN, K_VAL, SOLVED, RESULT
+    global GAME_CLOCK, RENDER_WINDOW, GAME_PUZZLE, BOARD, MOVE_COUNT_BOX, MOVE_COUNT, PUZZLE_COPY, RESET_BTN, CHECK_BTN, NEW_BTN, K_VAL, SOLVED, RESULT, RND_TOG,N_MODE, R_BTN, N_BTN
+    
+    #Quickly Solvable Games
+    #These all are solvable in less than 15 moves
+    #I used these to keep the processing time lower
+    quick_games = [[[4,1,3],[None, 2, 5], [7, 8, 6]],
+                   [[4,1,3],[2, None, 5], [7, 8, 6]],
+                   [[4,1,3],[2, 8, 5], [7, None, 6]],
+                   [[4,1,None],[2, 8, 3], [7, 6, 5]]]
+
+    random_mode = False # toggle random mode
     
     GAME_CLOCK =  pygame.time.Clock() # clock will assist with screen updates
 
     RENDER_WINDOW = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))  # set render window function 
 
-    GAME_PUZZLE = generate_new_puzzle()  # generate new puzzle for the game
+    puzzle_select = random.randint(0, 3) # generate a random number between 0 and 3
+    
+    GAME_PUZZLE = generate_new_puzzle()  # generate new puzzle for the game 
+
+    # set toggle mode
+    if random_mode is True:
+        RND_TOG = 'X'
+        N_MODE = ''
+    else:
+        RND_TOG = ''
+        N_MODE = 'X'
+        GAME_PUZZLE.puzzle = quick_games[random.randint(0, 3)] # pick a quick solve puzzle   
 
     PUZZLE_COPY = copy.deepcopy(GAME_PUZZLE)    # make a copy of the puzzle for resetting
 
@@ -80,7 +101,8 @@ def game_main():
     run_game = True  # establish case for game loop
 
     # MAIN GAME LOOP
-    while run_game:
+    while run_game:    
+        
 
         # Draw Game Screen and GUI
         # ============
@@ -132,8 +154,12 @@ def game_main():
                 # NEW GAME BUTTON CLICKED
                 if NEW_BTN.collidepoint(position):
 
-                    # Generate NEW
-                    GAME_PUZZLE = generate_new_puzzle()
+                    if random_mode is True:
+                        # Generate NEW
+                        GAME_PUZZLE = generate_new_puzzle()
+                    else:
+                        # pick a quick solve puzzle
+                        GAME_PUZZLE.puzzle = quick_games[random.randint(0, 3)] 
 
                     # make a copy of the puzzle for resetting
                     PUZZLE_COPY = copy.deepcopy(GAME_PUZZLE)
@@ -158,12 +184,35 @@ def game_main():
 
                         outcome = vpuz.build_move_tree(GAME_PUZZLE, k) # determine if solvable in k moves
                         
-                        if outcome[0] is True:  # Game Was Solved
-                            result = 'Solved'  
+                        if outcome[0] is True:  # Game Was Solved                            
                             MOVE_COUNT= str(outcome[3].generation) # set number of moves
                             SOLVED = ','.join(vpuz.get_solving_moves(outcome[3])) # join returned list into comma separated string
-                        else:
+                            result = 'Solvable! Winning Moves: ' + SOLVED
+                            SOLVED = result
+                        elif outcome[1] is True:
                             SOLVED = 'Unsolvable in ' + K_VAL + ' moves...' # not solvable in k moves
+                
+                # Random mode was enabled
+                if R_BTN.collidepoint(position):
+                    if random_mode is True:
+                        RND_TOG = ''
+                        N_MODE = 'X'
+                        random_mode = False
+                    else:
+                        RND_TOG = 'X'
+                        N_MODE = ''
+                        random_mode = True
+
+                # Normal mode was enabled
+                if N_BTN.collidepoint(position):
+                    if random_mode is True:
+                        RND_TOG = ''
+                        N_MODE = 'X'
+                        random_mode = False
+                    else:
+                        RND_TOG = 'X'
+                        N_MODE = ''
+                        random_mode = True
                             
             
             # Key Pressed Event Listener
@@ -200,7 +249,10 @@ def draw_game():
     draw_buttons()
 
     # Draw Text
-    draw_text()  
+    draw_text() 
+
+    # Draw random toggle
+    draw_rand_toggle() 
 
 def draw_buttons():
     """ Draws All Buttons to GUI"""
@@ -338,25 +390,25 @@ def draw_text():
     k_equals = pygame.Rect(270, 650, 52, 32) # creates a rectangle object
     equals_txt = BTN_FONT.render('K = ', True, TEXTCOLOR)   # render font
 
-    pygame.draw.rect(RENDER_WINDOW, BACKGROUNDCOLOR, k_equals)  #draw K value directions
+    pygame.draw.rect(RENDER_WINDOW, BACKGROUNDCOLOR, k_equals)  #draw K text
     RENDER_WINDOW.blit(equals_txt, (k_equals.x + 7, k_equals.y + 5)) # render text centered on button
 
     # Move Counter
     move_count = pygame.Rect(30, 650, 150, 30) # creates a rectangle object
     move_txt = BTN_FONT.render('Move Counter:', True, TEXTCOLOR)   # render font
 
-    pygame.draw.rect(RENDER_WINDOW, BACKGROUNDCOLOR, move_count)  #draw K value directions
+    pygame.draw.rect(RENDER_WINDOW, BACKGROUNDCOLOR, move_count)  #draw move counter 
     RENDER_WINDOW.blit(move_txt, (move_count.x + 7, move_count.y + 5)) # render text centered on button
 
     # Count Number
     count_num = pygame.Rect(190, 650, 50, 30) # creates a rectangle object
     countnum_txt = BTN_FONT.render(MOVE_COUNT, True, TEXTCOLOR)   # render font
 
-    pygame.draw.rect(RENDER_WINDOW, BACKGROUNDCOLOR, count_num)  #draw K value directions
+    pygame.draw.rect(RENDER_WINDOW, BACKGROUNDCOLOR, count_num)  #draw count number
     RENDER_WINDOW.blit(countnum_txt, (count_num.x + 7, count_num.y + 5)) # render text centered on button
 
     # Solved Status
-    solved_status = pygame.Rect(30, 700, 300, 30) # creates a rectangle object
+    solved_status = pygame.Rect(30, 725, 300, 30) # creates a rectangle object
     solved_txt = BTN_FONT.render(SOLVED, True, TEXTCOLOR)   # render font
 
     pygame.draw.rect(RENDER_WINDOW, BACKGROUNDCOLOR, solved_status)  #draw K value directions
@@ -365,6 +417,39 @@ def draw_text():
     global RESULT
     RESULT = solved_status
 
+def draw_rand_toggle():
+    """Draws the random toggle select"""
+    # Random Mode
+    rand_mode = pygame.Rect(700, 85, 15, 15) # creates a rectangle object
+    rand_txt = BTN_FONT.render(RND_TOG, True, BLACK)   # render font
+
+    pygame.draw.rect(RENDER_WINDOW, TEXTCOLOR, rand_mode)  #draw random mode check box
+    RENDER_WINDOW.blit(rand_txt, (rand_mode.x, rand_mode.y - 4)) # render text centered on button
+
+    # Random Label
+    rand_label = pygame.Rect(600, 85, 100, 20) # creates a rectangle object
+    rlab_txt = DIR_FONT.render("Random Mode", True, TEXTCOLOR)   # render font
+
+    pygame.draw.rect(RENDER_WINDOW, BACKGROUNDCOLOR, rand_label)  #draw label
+    RENDER_WINDOW.blit(rlab_txt, (rand_label.x, rand_label.y)) # render text centered on button
+
+    # Normal Mode
+    norm_mode = pygame.Rect(700, 125, 15, 15) # creates a rectangle object
+    norm_txt = BTN_FONT.render(N_MODE, True, BLACK)   # render font
+
+    pygame.draw.rect(RENDER_WINDOW, TEXTCOLOR, norm_mode)  #draw normal mode check box
+    RENDER_WINDOW.blit(norm_txt, (norm_mode.x, norm_mode.y - 4)) # render text centered on button
+
+    # Normal Label
+    norm_label = pygame.Rect(600, 125, 100, 20) # creates a rectangle object
+    nlab_txt = DIR_FONT.render("Normal Mode", True, TEXTCOLOR)   # render font
+
+    pygame.draw.rect(RENDER_WINDOW, BACKGROUNDCOLOR, norm_label)  #draw K value directions
+    RENDER_WINDOW.blit(nlab_txt, (norm_label.x, norm_label.y)) # render text centered on button
+
+    global R_BTN, N_BTN
+    R_BTN = rand_mode
+    N_BTN = norm_mode
 
 def tile_clicked(position):
     """

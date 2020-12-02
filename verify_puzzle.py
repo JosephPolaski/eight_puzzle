@@ -62,6 +62,7 @@ def build_move_tree(starting_puzzle, k):
 
         if next_node.solved == True: # check for solved puzzle
             solved = True
+            next_node.generation = next_node.parent.generation + 1 # set node generation to parent generation + 1
             solution = next_node
             break
 

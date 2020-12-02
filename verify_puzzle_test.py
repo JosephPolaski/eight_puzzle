@@ -35,36 +35,37 @@ class TestBuildTree(unittest.TestCase):
 
     def test_build_tree_fixed(self):
         """tests build tree method with fixed/controlled tests"""
-        print('-----------------------\nTesting Fixed Puzzle 0:\n-----------------------')
+        
         solution_set_0 = verify_puzzle.build_move_tree(self._test_0, 1)   # check if solvable with known puzzle and known number of moves
         self.assertTrue(solution_set_0[0], 'Test Puzzle 1 solvable')
-
-        print('-----------------------\nTesting Fixed Puzzle 1:\n-----------------------')
+      
         solution_set_1 = verify_puzzle.build_move_tree(self._test_1, 2)   # check if solvable with known puzzle and known number of moves
         self.assertTrue(solution_set_1[0], 'Test Puzzle 2 solvable')
-
-        print('-----------------------\nTesting Fixed Puzzle 2:\n-----------------------')
+      
         solution_set_2 = verify_puzzle.build_move_tree(self._test_2, 3)   # check if solvable with known puzzle and known number of moves
         self.assertTrue(solution_set_2[0], 'Test Puzzle 3 solvable')
 
-        print('-----------------------\nTesting Fixed Puzzle 3:\n-----------------------')
+     
         solution_set_3 = verify_puzzle.build_move_tree(self._test_4, 4)   # check if solvable with known puzzle and known number of moves
         self.assertTrue(solution_set_3[0], 'Test Puzzle 3 solvable')
-
-        print('-----------------------\nTesting Fixed Puzzle 4:\n-----------------------')
+        print(solution_set_3)
+       
         solution_set_4 = verify_puzzle.build_move_tree(self._test_5, 5)   # check if solvable with known puzzle and known number of moves
+        print(solution_set_4)
         self.assertTrue(solution_set_4[0], 'Test Puzzle 3 solvable')
 
         # this puzzle is solvable with this test but it takes 15 mins
         #print('-----------------------\nTesting Fixed Puzzle 5:\n-----------------------')
         #solution_set_5 = verify_puzzle.build_move_tree(self._test_6, 50)   # check if solvable with known puzzle and known number of moves
+        #print(solution_set_5)
         #self.assertTrue(solution_set_5[0], 'Test Puzzle 3 solvable')
 
     
     def test_build_tree_random(self):
         """tests build tree method with fixed/controlled tests"""
         print('\nTesting Random Puzzle\n')
-        solution_set = verify_puzzle.build_move_tree(self._test_3, 10)   # check if solvable with unknown puzzle and unknown amount of moves to win
+        solution_set = verify_puzzle.build_move_tree(self._test_3, 15)   # check if solvable with unknown puzzle and unknown amount of moves to win
+        print(solution_set)
     
     def test_get_solving_moves(self):
         """tests generating of a solving move list"""
@@ -73,8 +74,7 @@ class TestBuildTree(unittest.TestCase):
         self.assertTrue(solution_set_1[0])
 
         solving_moves = verify_puzzle.get_solving_moves(solution_set_1[3])
-        self.assertListEqual(solving_moves, ['right', 'down'])
-    
+        self.assertListEqual(solving_moves, ['right', 'down'])    
 
 
 if __name__=="__main__":
