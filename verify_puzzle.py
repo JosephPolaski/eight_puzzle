@@ -102,10 +102,11 @@ def get_solving_moves(solution):
     current = solution # current node pointer
 
     while current.parent is not None:   # traverse back along successful move choices
+        print(current)
         move_list.append(current.created_by)
         current = current.parent
 
-        move_list.reverse()
+    move_list.reverse()
 
     return move_list
 
@@ -125,6 +126,14 @@ def get_opposite_move(move):
         return 'left'
     elif move is None:
         return None
+
+if __name__=="__main__":
+    """Execute Script"""
+
+    puzzle = puzzle_board.puzzle_board()
+    puzzle.puzzle = [[1,None,3],[4, 2, 5], [7, 8, 6]] 
+
+    result = build_move_tree(puzzle, 5) 
 
 
 

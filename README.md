@@ -8,19 +8,52 @@ Fall 2020
 
 ### **Overview**:
 
-This 8-puzzle game uses Pygame for the GUI, I highly recommend checking it out!
+This 8-puzzle game uses Pygame for the GUI, I highly recommend checking it out! it was my first time working with Pygame and my first time doing anything front end with Python so it was definitely a learning experience that was alot of fun. 
 - <a href="https://www.pygame.org/">Pygame.org</a>
 
-### **Updated installation instructions comming soon:**
+Note: The project was developed with python 3.8.1 but mainly uses the python standard library so it should work with most recent versions of python 3.
 
-### **To run this game**:
-1. Create and activate new a virtual environment and update pip:
-```
-virtualenv venv $(which python3)
-source ./venv/bin/activate
-pip3 install --upgrade pip
-```
-2. Install Dependencies:
-```
-pip install -r requirements.txt
-```
+### **8 - Puzzle Background**:
+
+This is a number slider puzzle game with a size of n x n cells where where n = 3. There are (n<sup>2</sup> - 1) cells filled with numbers from (1...[n<sup>2</sup> - 1]). It can start out with any configuration other than the solved state. This game can be simply played by the user or it can determine whether or not the puzzle is solvable within a certain number of turns entered by the user. Below are examples of a solved and unsolved state.
+
+
+|| unsolved| |        
+|:--:| :--: |:--:| 
+| 2 | 4 | 3 | 
+| 7 | 5 |  | 
+| 8| 6 | 1 |
+
+
+
+|| solved | |
+|:--:| :--: |:--:| 
+| 1 | 2 | 3 | 
+| 4 | 5 | 6 | 
+| 7 | 8 |   | 
+
+
+
+---
+
+### **To Run on Windows (using cmd.exe)**:
+* *this guide assumes you have some version of Python 3.x.x installed, as well as pip. if you do not you can find Python <a href="https://www.python.org"/>here</a> and some documentation on pip <a href="https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/">here</a>. You can also check if you have these with the following commands:*
+    ```
+    pip --version
+    python --version
+    ```
+
+1. Ensure that all of the files in this package are all in the same directory. At minimum, the following need to be in within the same directory for this program to work properly:
+
+    - requirements.txt
+    - eight_puzzle.py
+    - puzzle_board.py
+    - verify_puzzle.py
+
+
+2. Open cmd.exe in the directory where the files are located or navigate to the directory in the windows command line and create a virtual environment:
+    ```
+    
+    ```
+
+

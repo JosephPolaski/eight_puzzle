@@ -76,6 +76,12 @@ class TestBuildTree(unittest.TestCase):
         solving_moves = verify_puzzle.get_solving_moves(solution_set_1[3])
         self.assertListEqual(solving_moves, ['right', 'down'])    
 
+        solution_set_2 = verify_puzzle.build_move_tree(self._test_2, 5)   # check if solvable with known puzzle and known number of moves
+        self.assertTrue(solution_set_1[0])
+
+        solving_moves_2 = verify_puzzle.get_solving_moves(solution_set_2[3])
+        self.assertListEqual(solving_moves_2, ['down','right', 'down'])    
+
 
 if __name__=="__main__":
     """Execute Script"""
