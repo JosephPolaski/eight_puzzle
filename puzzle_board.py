@@ -157,6 +157,14 @@ class puzzle_board:
         but each verticle move results in a change of plus or minus 2 to the number of inversions
         in a puzzle. Therefore if a puzzle is generated with an odd number of inversions, it is 
         unsolvable.
+
+        Reference Cited
+        Title: How to check if an instance of 8 puzzle is solvable?
+        Authors: Ajit Kumar et al.
+        URL: https://www.geeksforgeeks.org/check-instance-8-puzzle-solvable/#:~:text=Following%20is%20simple%20rule%20to,has%2011%20inversions%2C%20therefore%20unsolvable.
+
+        Note: I used this resource to learn how to tell if a 3 x 3 puzzle is solvable in general
+        I developed the code below on my own.
         """
 
         puzzle_1D = []

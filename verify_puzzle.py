@@ -7,10 +7,10 @@ k value will be provided by the user. The user may also play the game and see if
 able to solve it in k moves.
 
 The approach I took to solving this decision problem was to build a tree out of all possible
-moves that could be made at each turn in the game. Then I use a breadth first search (BFS) to find
-the shortest path from start to finish. If no 'solved' state for the game is found by k moves 
-then the decision problem unsolvable in that amount of turns. if it is solved before or at k turns
-then a sequence of moves will be returned that will allow the user to win the game in k turns.
+moves that could be made at each turn in the game with a breadth first search (BFS) pattern.
+If no 'solved' state for the game is found by k moves then the decision problem unsolvable in 
+that amount of turns. if it is solved before or at k turns then a sequence of moves will be 
+returned that will allow the user to win the game in k turns.
 """
 import puzzle_board, queue, copy
 
